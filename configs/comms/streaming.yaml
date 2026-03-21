@@ -1,0 +1,68 @@
+# Communication configurations
+mqtt:
+  enabled: true
+  broker_host: "localhost"
+  broker_port: 1883
+  username: null
+  password: null
+  topics:
+    detections: "surveillance/detections"
+    alerts: "surveillance/alerts"
+    status: "surveillance/status"
+    metrics: "surveillance/metrics"
+  qos: 1
+  retain: false
+  keepalive: 60
+
+# WebSocket for real-time streaming
+websocket:
+  enabled: true
+  host: "localhost"
+  port: 8765
+  max_connections: 10
+  compression: true
+
+# Kafka for high-throughput scenarios
+kafka:
+  enabled: false
+  bootstrap_servers: ["localhost:9092"]
+  topics:
+    detections: "surveillance_detections"
+    alerts: "surveillance_alerts"
+  compression_type: "gzip"
+
+# OPC-UA for industrial integration
+opcua:
+  enabled: false
+  endpoint_url: "opc.tcp://localhost:4840"
+  namespace: 2
+
+# Data streaming configurations
+streaming:
+  # Camera input
+  camera:
+    source: 0  # 0 for default camera, or path to video file
+    resolution: [640, 480]
+    fps: 30
+    buffer_size: 5
+    
+  # Video file input
+  video_file:
+    enabled: false
+    path: "data/raw/sample_video.mp4"
+    loop: true
+    
+  # Network stream input
+  network_stream:
+    enabled: false
+    url: "rtsp://localhost:8554/stream"
+    timeout: 30
+
+# Edge constraints
+edge_constraints:
+  max_batch_size: 1
+  static_graph: true
+  fixed_input_shape: true
+  memory_limit_mb: 1000
+  cpu_affinity: null  # List of CPU cores to use
+  gpu_memory_fraction: 0.8

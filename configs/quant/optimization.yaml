@@ -1,0 +1,71 @@
+# Quantization configurations
+quantization:
+  # Post-training quantization (PTQ)
+  ptq:
+    enabled: true
+    calibration_samples: 100
+    calibration_method: "minmax"
+    per_channel: true
+    
+  # Quantization-aware training (QAT)
+  qat:
+    enabled: false
+    epochs: 10
+    learning_rate: 0.001
+    weight_decay: 0.0001
+    
+  # Quantization schemes
+  schemes:
+    int8:
+      weight_bits: 8
+      activation_bits: 8
+      symmetric: true
+      
+    int4:
+      weight_bits: 4
+      activation_bits: 8
+      symmetric: false
+      
+    dynamic:
+      weight_bits: 8
+      activation_bits: "dynamic"
+      symmetric: true
+
+# Pruning configurations
+pruning:
+  enabled: true
+  method: "magnitude"
+  sparsity: 0.3
+  structured: false
+  iterative: true
+  fine_tune_epochs: 5
+
+# Distillation configurations
+distillation:
+  enabled: false
+  teacher_model: "yolov8m"
+  student_model: "yolov8n"
+  temperature: 3.0
+  alpha: 0.7
+  epochs: 20
+
+# Hardware-aware optimizations
+hardware:
+  # TensorRT optimizations
+  tensorrt:
+    enabled: false
+    precision: "fp16"
+    max_batch_size: 1
+    workspace_size: 1024
+    
+  # OpenVINO optimizations
+  openvino:
+    enabled: true
+    precision: "FP16"
+    device: "CPU"
+    
+  # CoreML optimizations
+  coreml:
+    enabled: false
+    compute_units: "all"
+    minimum_deployment_target: "13.0"

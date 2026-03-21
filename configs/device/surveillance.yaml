@@ -1,0 +1,92 @@
+# Device configurations for different edge targets
+device:
+  # Raspberry Pi 4B
+  raspberry_pi:
+    cpu_cores: 4
+    memory_gb: 4
+    gpu: "VideoCore VI"
+    target_fps: 10
+    max_resolution: [640, 480]
+    quantization: "int8"
+    
+  # NVIDIA Jetson Nano
+  jetson_nano:
+    cpu_cores: 4
+    memory_gb: 4
+    gpu: "Maxwell"
+    target_fps: 15
+    max_resolution: [1280, 720]
+    quantization: "int8"
+    
+  # NVIDIA Jetson Xavier NX
+  jetson_xavier:
+    cpu_cores: 6
+    memory_gb: 8
+    gpu: "Volta"
+    target_fps: 30
+    max_resolution: [1920, 1080]
+    quantization: "fp16"
+    
+  # Android device
+  android:
+    cpu_cores: 8
+    memory_gb: 6
+    gpu: "Adreno"
+    target_fps: 20
+    max_resolution: [1280, 720]
+    quantization: "int8"
+
+# Model configurations
+model:
+  # Baseline model (higher accuracy)
+  baseline:
+    name: "yolov8n"
+    input_size: [640, 640]
+    confidence_threshold: 0.5
+    nms_threshold: 0.45
+    max_detections: 100
+    
+  # Edge-optimized model (lower latency)
+  edge_optimized:
+    name: "yolov8n_quantized"
+    input_size: [416, 416]
+    confidence_threshold: 0.4
+    nms_threshold: 0.5
+    max_detections: 50
+
+# Detection classes
+detection:
+  classes:
+    - "person"
+    - "car"
+    - "bicycle"
+    - "motorcycle"
+    - "bus"
+    - "truck"
+  
+  # Surveillance-specific alerts
+  alerts:
+    intrusion_zones:
+      enabled: true
+      zones: []  # Define zones in demo
+    loitering:
+      enabled: true
+      min_duration_seconds: 30
+    abandoned_object:
+      enabled: true
+      min_duration_seconds: 60
+
+# Performance targets
+performance:
+  latency_ms:
+    target: 50
+    max: 100
+  fps:
+    target: 20
+    min: 10
+  memory_mb:
+    target: 500
+    max: 1000
+  energy_mwh_per_inference:
+    target: 10
+    max: 50
